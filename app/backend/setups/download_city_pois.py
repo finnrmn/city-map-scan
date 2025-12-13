@@ -2,8 +2,17 @@ import googlemaps
 import time
 import json
 import os
+from pathlib import Path
 
-GOOGLE_API_KEY = "{GOOGLE_API_KEY}"
+from dotenv import load_dotenv
+
+# API-Key kommt aus app/backend/setups/.env (nicht eingecheckt), siehe .env.example
+load_dotenv(Path(__file__).resolve().parent / ".env")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+if not GOOGLE_API_KEY:
+    raise RuntimeError("GOOGLE_API_KEY fehlt – bitte in app/backend/setups/.env setzen.")
+# Platzhalter für gespeicherte URLs; pois_api.py ersetzt ihn zur Laufzeit durch den echten Key
+API_KEY_PLACEHOLDER = "{GOOGLE_API_KEY}"
 gmaps = googlemaps.Client(key=GOOGLE_API_KEY)
 
 KATEGORIEN = {
@@ -90,8 +99,8 @@ def get_photo_url(details):
     """Erstellt Google Photo-URL, falls Foto vorhanden"""
     if "photos" in details and len(details["photos"]) > 0:
         ref = details["photos"][0]["photo_reference"]
-        # Für Vorschau reicht das, für Produktion evtl. Caching oder Proxy bauen
-        return f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference={ref}&key={GOOGLE_API_KEY}"
+        # Key nicht in die JSON schreiben, nur den Platzhalter
+        return f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference={ref}&key={API_KEY_PLACEHOLDER}"
     return None
 
 

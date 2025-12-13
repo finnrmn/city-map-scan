@@ -23,3 +23,7 @@ timing.sh
 app/backend/logger.txt
 app/backend/pylogger.txt
 app/backend/log.py
+# Secrets
+.env
+**/.env
+!**/.env.example
