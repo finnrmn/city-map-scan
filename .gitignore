@@ -16,7 +16,8 @@ app/backend/files/de_streets.json
 
 app/backend/output/*
 !app/backend/output/.gitkeep
-
+app/backend/input/*
+!app/backend/input/.gitkeep
 # Ignores für Timing
 timing.sh
 app/backend/logger.txt
