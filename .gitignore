@@ -1,0 +1,24 @@
+.venv/
+**/.idea/
+.idea/
+.DS_Store/
+
+# Ignore Python bytecode
+*.pyc
+__pycache__/
+**/__pycache__/
+output
+
+
+
+#IGNORES FÜR DIE BACKEND-KOMPONENTE
+app/backend/files/de_streets.json
+
+app/backend/output/*
+!app/backend/output/.gitkeep
+
+# Ignores für Timing
+timing.sh
+app/backend/logger.txt
+app/backend/pylogger.txt
+app/backend/log.py

@@ -1,0 +1,510 @@
+/* Base styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Roboto', Arial, sans-serif;
+    background: #fafcff;
+    color: #1a1a1a;
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.section {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/*SECTION 1 Camera*/
+
+.section-camera {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+
+#camera-video,
+#photo-canvas {
+    width: 60vw; /* dynamisch: 80–90% je nach Platz, max 600px */
+    aspect-ratio: 4 / 3;
+    height: auto; /* Höhe wird automatisch passend zur Breite berechnet */
+    max-height: 70vh;
+    border-radius: 6vw;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* oder center, je nach Wunsch */
+    align-items: center;
+    z-index: 2;
+    pointer-events: none; /* <- Buttons müssen davon ausgenommen werden */
+}
+
+.btn-group {
+    position: absolute;
+    bottom: 30px;
+    left: 50vw;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 38px;
+    z-index: 3;
+    pointer-events: auto;
+    isolation: isolate;
+}
+
+button {
+    font-family: inherit;
+    font-size: 18px;
+    background: linear-gradient(to bottom, #4dc7d9 0%, #66a6ff 100%);
+    color: white;
+    padding: 0.8em 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    transform: scale(0.95);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    background: linear-gradient(to bottom, #5a5a5a 0%, rgba(229, 229, 229, 0) 100%);
+}
+
+button span {
+    display: inline-block;
+    margin-left: 0.4em;
+    transition: all 0.3s;
+}
+
+button svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+    transition: all 0.3s;
+}
+
+button .svg-wrapper svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+button .svg-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-right: 0.5em;
+    transition: all 0.3s;
+}
+
+button:hover .svg-wrapper {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+button:hover svg {
+    transform: rotate(360deg);
+}
+
+.section-loading{
+    align-items: center;
+}
+/* pois loading animation */
+/* From Uiverse.io by kennyotsu */
+.card {
+    /* color used to softly clip top and bottom of the .words container */
+    --bg-color: #fafcff;
+    background-color: var(--bg-color);
+    border-radius: 1.25rem;
+    margin-left: 50vw;
+    margin-top: 50vh;
+}
+
+.loader {
+    color: rgb(124, 124, 124);
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 25px;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 40px;
+    padding: 10px 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    border-radius: 8px;
+}
+
+.words {
+    overflow: hidden;
+    position: relative;
+}
+
+.words::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+            var(--bg-color) 10%,
+            transparent 30%,
+            transparent 70%,
+            var(--bg-color) 90%
+    );
+    z-index: 20;
+}
+
+.word {
+    display: block;
+    height: 100%;
+    padding-left: 6px;
+    color: #62a9f8;
+    animation: spin_4991 4s infinite;
+}
+
+@keyframes spin_4991 {
+    10% {
+        -webkit-transform: translateY(-102%);
+        transform: translateY(-102%);
+    }
+
+    25% {
+        -webkit-transform: translateY(-100%);
+        transform: translateY(-100%);
+    }
+
+    35% {
+        -webkit-transform: translateY(-202%);
+        transform: translateY(-202%);
+    }
+
+    50% {
+        -webkit-transform: translateY(-200%);
+        transform: translateY(-200%);
+    }
+
+    60% {
+        -webkit-transform: translateY(-302%);
+        transform: translateY(-302%);
+    }
+
+    75% {
+        -webkit-transform: translateY(-300%);
+        transform: translateY(-300%);
+    }
+
+    85% {
+        -webkit-transform: translateY(-402%);
+        transform: translateY(-402%);
+    }
+
+    100% {
+        -webkit-transform: translateY(-400%);
+        transform: translateY(-400%);
+    }
+}
+
+#pois-loader-wrapper {
+    --bg-color: #fafcff;
+    position: absolute;
+    background-color: var(--bg-color);
+    padding: 1rem 2rem;
+    right: 30px;
+    bottom: 30px;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.pois-loader {
+    color: rgb(124, 124, 124);
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 30px;
+    padding: 10px 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    border-radius: 8px;
+}
+
+/* Loading Animation */
+.dots-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    z-index: 10; /* Über dem Canvas, unter dem Overlay */
+    pointer-events: none;
+    background: rgba(142, 142, 142, 0.4); /* optional, leichter Weiß-Overlay */
+}
+
+
+/* --- DOTS LOADING ANIMATION (NOT IN USE)
+
+    wenn doch benutzen erstezte wrapper-grid mit:
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+ */
+.dot {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: #b3d4fc;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.dot:last-child {
+    margin-right: 0;
+}
+
+.dot:nth-child(1) {
+    animation-delay: -0.3s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: -0.1s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.1s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        background-color: #66a6ff;
+        box-shadow: 0 0 0 0 rgba(102, 166, 255, 0.7);
+    }
+    50% {
+        transform: scale(1.2);
+        background-color: #4dc7d9;
+        box-shadow: 0 0 0 10px rgba(178, 212, 252, 0);
+    }
+    100% {
+        transform: scale(0.8);
+        background-color: #66a6ff;
+        box-shadow: 0 0 0 0 rgba(102, 166, 255, 0.7);
+    }
+}
+
+/* --- ENDE LOADING DOTS --- */
+
+
+/* Cityname Animation */
+.city-name {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.2rem;
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.26);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.city-name.visible {
+    opacity: 1;
+    animation: fade-in 0.8s;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.92) translate(-50%, -50%);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translate(-50%, -50%);
+    }
+}
+
+/* SECTION 2: POIs */
+.section-pois {
+}
+
+.pois-headline {
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    color: #212c36;
+}
+
+.pois-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    overflow-x: scroll;
+    padding: 20px;
+    scroll-snap-align: start;
+    overflow-y: hidden;
+}
+
+.poi-card {
+    border-radius: 16px;
+    padding: 12px;
+    flex-direction: column;
+    align-items: center;
+    background: #5a5a5a center no-repeat;
+    background-size: cover;
+    height: 180px;
+    width: 200px;
+    margin: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.poi-card:active {
+    transform: scale(0.95);
+}
+
+.poi-title {
+    z-index: 1;
+    color: white;
+    font-weight: bold;
+    font-size: 1.05em;
+    text-align: left;
+    margin-bottom: 2px;
+}
+
+.poi-desc {
+    z-index: 1;
+    font-size: 0.96em;
+    color: white;
+    margin: 0 0 4px 0;
+    text-align: left;
+}
+
+.poi-address {
+    z-index: 1;
+    margin-top: 0;
+    font-size: 0.6em;
+    color: white;
+    text-align: left;
+}
+
+
+.g-scrolling-carousel .jc-left,
+.g-scrolling-carousel .jc-right {
+    opacity: 0 !important; /* komplett durchsichtig  */
+    pointer-events: none !important; /* nicht anklickbar     */
+}
+
+/* SECTION 3: Map */
+.section-map {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.map-headline {
+    margin-top: 15px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #212c36;
+    margin-bottom: 22px;
+}
+
+iframe {
+    border-radius: 2em;
+    width: 80vw;
+    height: 80vh;
+    place-self: center;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    object-fit: fill;
+}
+
+.map-placeholder {
+    border-radius: 2em;
+    width: 80vw;
+    height: 80vh;
+    place-self: center;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    object-fit: fill;
+}
+
+/*Animations*/
+
+/* Responsive Design */
+@media (max-width: 540px) {
+    .section-camera {
+        justify-content: flex-start; /* Inhalt nach oben ausrichten */
+    }
+
+    #camera-video,
+    #photo-canvas {
+        width: clamp(70vw, 80vw, 600px);
+        margin-top: 10vh;
+        height: 50vh; /* Rechteck näher zum oberen Rand */
+    }
+
+    .btn-group {
+        flex-direction: column;
+        bottom: 15vh;
+        gap: 5vh;
+    }
+
+
+    .pois-cards {
+        gap: 12px;
+        padding-left: 10px;
+    }
+
+
+    .poi-card {
+        min-width: 78vw;
+        max-width: 86vw;
+    }
+}
+

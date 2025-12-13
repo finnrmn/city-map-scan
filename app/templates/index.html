@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Map Scanner Webapp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<!-- SECTION 1: Camera -->
+<section class="section section-camera" id="section-camera">
+    <video id="camera-video" autoplay playsinline></video>
+    <canvas id="photo-canvas" style="display:none;"></canvas>
+    <!-- Loading Animation - Map Scann -->
+    <section class="dots-container" id="loading-animation" style="display:none;">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </section>
+
+    <!-- Loading Animation - POIS -->
+    <div class="pois-loader-wrapper" id="pois-loader-wrapper" style="display: none;">
+        <div class="pois-loader">
+            <p>loading</p>
+            <div class="words">
+                <span class="word">Sehenswürdigkeiten</span>
+                <span class="word">Aktivitäten</span>
+                <span class="word">Restaurants</span>
+                <span class="word">Maps</span>
+            </div>
+        </div>
+    </div>
+    <!-- Overlay Bottons -->
+    <div class="overlay">
+
+        <div class="btn-group">
+            <!-- Take Photo -->
+            <button id="take-photo-btn">
+                <div class="svg-wrapper-1">
+                    <div class="svg-wrapper">
+                        <!-- Icon platzhalter -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"/>
+                        </svg>
+
+
+                    </div>
+                </div>
+                <span>Aufnehmen</span>
+            </button>
+            <!-- Retake Photo -->
+            <button id="retake-photo-btn" style="display:none;">
+                <div class="svg-wrapper-1">
+                    <div class="svg-wrapper">
+                        <!-- Icon platzhalter -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd"
+                                  d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+
+                    </div>
+                </div>
+                <span>Entfernen</span>
+            </button>
+            <!-- Upload -->
+            <button id="upload-image-btn">
+                <div class="svg-wrapper-1">
+                    <div class="svg-wrapper">
+                        <!-- Icon platzhalter -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd"
+                                  d="M10.5 3.75a6 6 0 0 0-5.98 6.496A5.25 5.25 0 0 0 6.75 20.25H18a4.5 4.5 0 0 0 2.206-8.423 3.75 3.75 0 0 0-4.133-4.303A6.001 6.001 0 0 0 10.5 3.75Zm2.03 5.47a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 1 0 1.06 1.06l1.72-1.72v4.94a.75.75 0 0 0 1.5 0v-4.94l1.72 1.72a.75.75 0 1 0 1.06-1.06l-3-3Z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+
+                    </div>
+                </div>
+                <span>Hochladen</span>
+            </button>
+            <!-- Send -->
+            <button id="send-image-btn" style="display:none;">
+                <div class="svg-wrapper-1">
+                    <div class="svg-wrapper">
+                        <!-- Icon platzhalter -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd"
+                                  d="M19.916 4.626a.75.75 0 0 1 .208 1.04l-9 13.5a.75.75 0 0 1-1.154.114l-6-6a.75.75 0 0 1 1.06-1.06l5.353 5.353 8.493-12.74a.75.75 0 0 1 1.04-.207Z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+
+                    </div>
+                </div>
+                <span>Scannen</span>
+            </button>
+        </div>
+        <div class="city-name" id="city-name"></div>
+        <input type="file" id="upload-input" accept="image/*" style="display:none;">
+    </div>
+</section>
+<section class="section section-loading" id="pois-loading-section" style="display:none;">
+
+    <div class="loader">
+        <p>loading</p>
+        <div class="words">
+            <span class="word">places</span>
+            <span class="word">cards</span>
+            <span class="word">maps</span>
+            <span class="word">images</span>
+            <span class="word">links</span>
+        </div>
+    </div>
+
+</section>
+<!-- SECTION 2: POIs -->
+<section class="section section-pois" id="section-pois" style="display: none;">
+    <!-- Erste Liste -->
+    <h2 class="pois-headline" id="pois-headline">Points of Interest</h2>
+    <div class="g-scrolling-carousel">
+        <div class="items" id="pois-cards"></div>
+    </div>
+
+    <h2 class="pois-headline" id="fun-headline">Fun</h2>
+    <div class="g-scrolling-carousel">
+        <div class="items" id="fun-cards"></div>
+    </div>
+
+    <h2 class="pois-headline" id="restaurants-headline">Restaurants</h2>
+    <div class="g-scrolling-carousel">
+        <div class="items" id="restaurants-cards"></div>
+    </div>
+
+</section>
+
+<!-- SECTION 3: Map -->
+<section class="section section-map" id="section-map" style="display: none;">
+    <h2 class="map-headline" id="map-headline">[City] Map</h2>
+    <iframe id="map-img" class="map-container"
+            src="https://www.google.com/maps?q=52.51003189999999,13.369693&z=15&hl=de&output=embed"
+            referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+
+</section>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.gScrollingCarousel.css') }}">
+<script src="{{ url_for('static', filename='js/jquery.gScrollingCarousel.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".g-scrolling-carousel .items").gScrollingCarousel({
+            scrollAmount: 'auto',        // oder 'viewport' für seitenweise
+            draggable: true,
+            mouseScrolling: false,
+            snapOnDrag: false,
+            mobileNative: true
+        });
+    });
+</script>
+</body>
+</html>
