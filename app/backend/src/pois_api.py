@@ -1,11 +1,25 @@
 import json
+import os
 from pathlib import Path
 from typing import Dict, Any, List
+
+from dotenv import load_dotenv
 
 # Static POI loader; no external API calls.
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "files" / "city_pois"
 MAX_ITEMS_PER_CATEGORY = 12
+
+# The static files only contain a placeholder instead of the Google API key;
+# the real key is read from app/backend/setups/.env (not committed).
+load_dotenv(Path(__file__).resolve().parents[1] / "setups" / ".env")
+API_KEY_PLACEHOLDER = "{GOOGLE_API_KEY}"
+
+
+def _inject_api_key(url: str | None) -> str | None:
+    if not url:
+        return url
+    return url.replace(API_KEY_PLACEHOLDER, os.getenv("GOOGLE_API_KEY", ""))
 
 
 def _city_to_filename(city: str) -> str:
@@ -20,8 +34,8 @@ def _map_entries(entries: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             "name": item.get("name"),
             "beschreibung": item.get("beschreibung", ""),
             # Preserve any provided photo URL (static files contain Google photo links)
-            "photo_url": item.get("photo_url") or item.get("foto_url"),
-            "iframe_link": item.get("iframe_link") or item.get("embed_url"),
+            "photo_url": _inject_api_key(item.get("photo_url") or item.get("foto_url")),
+            "iframe_link": _inject_api_key(item.get("iframe_link") or item.get("embed_url")),
         })
     return mapped
 
